@@ -18,6 +18,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       password: "password123",
       password_confirmation: "password123",
     }}
-    assert_response :success
+    assert_response :redirect
   end
 end

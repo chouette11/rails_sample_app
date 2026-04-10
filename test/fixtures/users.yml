@@ -1,0 +1,4 @@
+one:
+  name: test_user
+  email: test@example.com
+  password_digest: testtest

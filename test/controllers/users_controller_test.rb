@@ -7,7 +7,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get show" do
-    get user_path(users(:one))
+    get user_path(users(:michael))
     assert_response :success
   end
 

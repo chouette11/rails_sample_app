@@ -1,4 +1,5 @@
 import { Application } from "@hotwired/stimulus"
+import "custom/menu"
 
 const application = Application.start()
 

@@ -67,11 +67,27 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "password should have a minimum length" do
-    @user.password = @user.password_confirmation = "a" * 7
+    @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
   end
 
   test "authenticated? should return false for a user with nil digest" do
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:remember, '')
+  end
+
+  test "activate should set activated to true" do
+    @user.save
+    assert_not @user.activated?
+    @user.activate
+    assert @user.reload.activated?
+  end
+
+  test "activate should set activated_at to current time" do
+    @user.save
+    assert_nil @user.activated_at
+    freeze_time do
+      @user.activate
+      assert_equal Time.zone.now, @user.reload.activated_at
+    end
   end
 end

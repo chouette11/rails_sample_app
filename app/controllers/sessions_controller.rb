@@ -12,9 +12,9 @@ class SessionsController < ApplicationController
         log_in user
         redirect_to forwarding_url || user
       else
-        message  = "Account not activated. "
-        message += "Check your email for the activation link."
-        flash[:warning] = message
+        user.regenerate_activation_digest
+        user.send_activation_email
+        flash[:warning] = "Account not activated. We've sent you a new activation email."
         redirect_to root_url
       end
     else

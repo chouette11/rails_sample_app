@@ -25,6 +25,38 @@ class InvalidPasswordTest < UsersLogin
   end
 end
 
+class UnactivatedUserLoginTest < UsersLogin
+
+  def setup
+    super
+    @inactive = users(:inactive)
+  end
+
+  test "login with correct password resends activation email" do
+    assert_emails 1 do
+      post login_path, params: { session: { email:    @inactive.email,
+                                            password: 'password' } }
+    end
+    assert_not is_logged_in?
+    assert_not flash[:warning].blank?
+    assert_redirected_to root_url
+  end
+
+  test "resend regenerates activation digest" do
+    old_digest = @inactive.activation_digest
+    post login_path, params: { session: { email:    @inactive.email,
+                                          password: 'password' } }
+    assert_not_equal old_digest, @inactive.reload.activation_digest
+  end
+
+  test "login with wrong password does not resend" do
+    assert_no_emails do
+      post login_path, params: { session: { email:    @inactive.email,
+                                            password: 'wrong' } }
+    end
+  end
+end
+
 class ValidLogin < UsersLogin
 
   def setup

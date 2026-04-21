@@ -73,7 +73,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = {
-    host: "https://rails-sample-app-1-h44r.onrender.com/",
+    host: "rails-sample-app-1-h44r.onrender.com/",
     protocol: "https"
   }
 

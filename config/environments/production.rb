@@ -77,6 +77,19 @@ Rails.application.configure do
     protocol: "https"
   }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV['MAILTRAP_USERNAME'],
+    password:  ENV['MAILTRAP_PASSWORD'],
+    host:      'sandbox.smtp.mailtrap.io',
+    port:      2525,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  # メール送信エラーを無視しない（本番では推奨）
+  config.action_mailer.raise_delivery_errors = true
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
